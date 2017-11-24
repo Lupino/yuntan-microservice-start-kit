@@ -4,7 +4,7 @@ import {userSrv, getUser, doBind, doSignin} from './common';
 import {
   promiseToCallback,
   sendJsonResponse,
-  fetchJSON,
+  fetch,
   stringGenerator,
 } from '../utils';
 
@@ -12,13 +12,13 @@ function getWxAccessToken(code) {
   const {appid, secret} = weixin;
   const q = qs.stringify({appid, secret, code, grant_type: 'authorization_code'});
   const url = `https://api.weixin.qq.com/sns/oauth2/access_token?${q}`;
-  return fetchJSON(url);
+  return fetch(url).then((rsp) => rsp.json());
 }
 
 function getWxUserInfo({access_token, openid}) {
   const q = qs.stringify({access_token, openid, lang: 'zh_CN'});
   const url = `https://api.weixin.qq.com/sns/userinfo?${q}`;
-  return fetchJSON(url);
+  return fetch(url).then((rsp) => rsp.json());
 }
 
 async function signinOrSignupHandler_(code) {
