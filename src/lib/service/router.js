@@ -46,16 +46,16 @@ export default class Router {
     };
   }
   get(route, routeFunction) {
-    this.route.GET.push(new Route(route, routeFunction));
+    this.routes.GET.push(new Route(route, routeFunction));
   }
   post(route, routeFunction) {
-    this.route.POST.push(new Route(route, routeFunction));
+    this.routes.POST.push(new Route(route, routeFunction));
   }
   delete(route, routeFunction) {
-    this.route.DELETE.push(new Route(route, routeFunction));
+    this.routes.DELETE.push(new Route(route, routeFunction));
   }
   put(route, routeFunction) {
-    this.route.PUT.push(new Route(route, routeFunction));
+    this.routes.PUT.push(new Route(route, routeFunction));
   }
   async checkPermission(method, pathname, options={}) {
     method = method.toUpperCase();
