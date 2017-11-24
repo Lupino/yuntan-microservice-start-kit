@@ -9,6 +9,7 @@ import {
 
 import {checkPermission as articleCheckPermission} from './article';
 import {checkPermission as coinCheckPermission} from './coin';
+import {checkPermission as userCheckPermission} from './user';
 
 function signSecret({user, service, pathname, method}) {
   const originalSecret = config[service].secret;
@@ -29,6 +30,7 @@ function signSecret({user, service, pathname, method}) {
 const permissions = {
   article: articleCheckPermission,
   coin: coinCheckPermission,
+  user: userCheckPermission,
 };
 
 function errorNoPermission(res) {
