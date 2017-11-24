@@ -68,7 +68,7 @@ export function route(app) {
   app.get('/api/signinOrSignupByWeixin/', signinOrSignupHandler);
 
   app.get('/api/weixinAuth/', (req, res) => {
-    const {next} = req.query.next;
+    const {next} = req.query;
     const q = qs.stringify({
       appid: weixin.appid,
       redirect_uri: `${host}/api/signinOrSignupByWeixin/?${qs.stringify({next})}`,
