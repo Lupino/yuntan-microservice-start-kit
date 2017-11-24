@@ -8,8 +8,8 @@ function generateServiceName(service, name) {
   return `${service}-${name}`;
 }
 
-export async function doBind({service, name, username}) {
-  await userSrv.createBind(username, {service, name: generateServiceName(service, name)});
+export async function doBind(username, {service, name, extra}) {
+  await userSrv.createBind(username, {service, name: generateServiceName(service, name), extra});
 }
 
 export async function doSignin(username) {

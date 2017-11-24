@@ -37,17 +37,15 @@ async function signinOrSignupHandler_(code) {
   } catch (e) {
     const passwd = stringGenerator.random(10);
     user = await userSrv.create({username: unionid, passwd});
-    await doBind({service: 'weixin', name: unionid, username: unionid});
+    await doBind(unionid, {service: 'weixin', name: unionid, extra: uinfo});
     const extra = {
       nickname: uinfo.nickname,
-      sex: uinfo.sex === 1 ? 'M' : uinfo.sex === 2 ? 'F' : 'O'
+      sex: uinfo.sex === 1 ? 'M' : uinfo.sex === 2 ? 'F' : 'O',
       province: uinfo.province,
       city: uinfo.city,
       headimgurl: uinfo.headimgurl,
-    }
+    };
     await userSrv.updateExtra(user.name, extra);
-  }
-
   }
   if (!user) {
     throw new Error('signinOrSignup Error');
