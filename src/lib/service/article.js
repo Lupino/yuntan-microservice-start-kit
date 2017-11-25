@@ -1,17 +1,61 @@
 import Router from './router';
+import {article as config} from '../../../config';
+import {ArticleService} from 'yuntan-service';
+
+export const articleSrv = new ArticleService(config);
 
 const router = new Router();
+
+/*
+ * we save user and article relationship on timeline
+ * with `user_{uid}`
+ */
+
+function extractUid(timelines) {
+  const filterd = timelines.filter((timeline) => {
+    if (timeline.startsWith('user_')) {
+      return true;
+    }
+    return false;
+  });
+  if (filterd > 0) {
+    return Number(filterd[0].substr(5));
+  }
+  return 0;
+}
 
 async function alawayTrue(params, options) {
   return true;
 }
 
-async function requireOwner({art_id}, {user}) {
-  return true;
+async function requireOwner(params, options) {
+  if (requireAdmin(params, options)) {
+    return true;
+  }
+
+  const {art_id} = params;
+  const {user} = options;
+
+  const data = await articleSrv.graphql(`{article(id: ${art_id}) {timelines}}`);
+  if (data.errors) {
+    console.log(data.errors);
+    return false;
+  }
+  if (!data.article) {
+    return false;
+  }
+  const uid = extractUid(data.article.timelines);
+  if (uid === user.id) {
+    return true;
+  }
+  return false;
 }
 
-async function requireAdmin({art_id}, {user}) {
-  return true;
+async function requireAdmin(params, {user}) {
+  if (user.groups.indexOf('admin') > -1) {
+    return true;
+  }
+  return false;
 }
 
 // router.post("/api/articles/", alawayTrue);

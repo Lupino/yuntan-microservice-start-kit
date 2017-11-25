@@ -2,12 +2,36 @@ import Router from './router';
 
 const router = new Router();
 
-async function requireOwner({name}, {user}) {
-  return true;
+/*
+ * coin name is `{type}_{name}`
+ * @type do not contains any underscore
+ */
+
+function parseName(name) {
+  const idx = name.indexOf('_');
+  return {
+    type: name.substr(0, idx),
+    name: name.substr(idx + 1),
+  };
 }
 
-async function requireAdmin({name}, {user}) {
-  return true;
+async function requireOwner(params, options) {
+  if (requireAdmin(params, options)) {
+    return true;
+  }
+  const parsed = parseName(params.name);
+  const {user} = options.user;
+  if (parsed.name === user.name) {
+    return true;
+  }
+  return false;
+}
+
+async function requireAdmin(params, {user}) {
+  if (user.groups.indexOf('admin') > -1) {
+    return true;
+  }
+  return false;
 }
 
 router.get('/api/coins/:name/score/', requireOwner);

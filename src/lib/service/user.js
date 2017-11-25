@@ -2,12 +2,20 @@ import Router from './router';
 
 const router = new Router();
 
-async function requireOwner({name}, {user}) {
-  return true;
-}
+/*
+ * we save admin on groups.
+ *
+ */
 
-async function requireAdmin({name}, {user}) {
-  return true;
+// async function requireOwner(params, options) {
+//   return true;
+// }
+
+async function requireAdmin(params, {user}) {
+  if (user.groups.indexOf('admin') > -1) {
+    return true;
+  }
+  return false;
 }
 
 router.get('/api/users/', requireAdmin);
