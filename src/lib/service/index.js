@@ -3,29 +3,13 @@ import config from '../../../config';
 import {requireLogin} from '../user';
 import {
   stringGenerator,
-  sendJsonResponseWithPromise,
+  sendJsonResponse,
   promiseToCallback,
 } from '../utils';
 
 import {checkPermission as articleCheckPermission} from './article';
 import {checkPermission as coinCheckPermission} from './coin';
 import {checkPermission as userCheckPermission} from './user';
-
-function signSecret({user, service, pathname, method}) {
-  const originalSecret = config[service].secret;
-  const randomNonce = stringGenerator.random(10);
-  const timestamp = Math.floor(new Date() / 1000);
-  const hmac = crypto.createHmac('sha256', randomNonce);
-  hmac.update(originalSecret);
-  hmac.update(method);
-  hmac.update(pathname);
-  hmac.update('' + timestamp);
-  return {
-    nonce: randomNonce,
-    secret: hmac.digest('hex').toUpperCase(),
-    timestamp: timestamp,
-  };
-}
 
 const permissions = {
   article: articleCheckPermission,
@@ -53,8 +37,24 @@ export function route(app) {
       if (err || !ok) {
         return errorNoPermission(res);
       }
-      const opts = {spec: 'secret', errStatus: 403};
-      sendJsonResponseWithPromise(res, signSecret, opts)({user, service, pathname, method});
+      const secret = signSecret(service, method, pathname)
+      sendJsonResponse(res, null, {secret});
     });
   });
+}
+
+function signSecret(service, method, pathname) {
+  const secret = config[service].secret;
+  const randomNonce = stringGenerator.random(10);
+  const timestamp = Math.floor(new Date() / 1000);
+  const hmac = crypto.createHmac('sha256', randomNonce);
+  hmac.update(secret);
+  hmac.update(method);
+  hmac.update(pathname);
+  hmac.update('' + timestamp);
+  return {
+    nonce: randomNonce,
+    secret: hmac.digest('hex').toUpperCase(),
+    timestamp: timestamp,
+  };
 }
