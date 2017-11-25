@@ -20,7 +20,7 @@ async function requireOwner(params, options) {
     return true;
   }
   const parsed = parseName(params.name);
-  const {user} = options.user;
+  const {user} = options;
   if (parsed.name === user.name) {
     return true;
   }
