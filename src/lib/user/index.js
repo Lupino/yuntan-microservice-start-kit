@@ -80,4 +80,17 @@ function indexRoute(app) {
     const specData = {result: 'OK'};
     sendJsonResponseWithPromise(res, removeToken, {specData})(req.token);
   });
+
+  app.get('/api/setup/', requireLogin(), (req, res) => {
+    const setupToken = req.query['setup-token'];
+    if (!setupToken) {
+      res.status(400).json({ err: 'setup-token is required.' });
+    }
+    async function doSetup() {
+      const group = await getTokenValue(setupToken);
+      await userSrv.createGroup(req.currentUser.name, group);
+    }
+    const specData = {result: 'OK'};
+    sendJsonResponseWithPromise(res, doSetup, {specData})();
+  });
 }
