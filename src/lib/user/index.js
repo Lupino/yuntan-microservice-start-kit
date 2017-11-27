@@ -52,12 +52,21 @@ export function currentUser() {
 }
 
 export function requireLogin() {
-  return function(req, res, next) {
+  return (req, res, next) => {
     if (req.currentUser) {
       return next();
     }
     res.status(403).json({err: 'Unauthorized'});
   };
+}
+
+export function requireAdmin() {
+  return (req, res, next) => {
+    if (req.currentUser && req.currentUser.groups.indexOf('admin') > -1) {
+      return next();
+    }
+    res.status(403).json({err: 'No Permission'});
+  }
 }
 
 function indexRoute(app) {
