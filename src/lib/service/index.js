@@ -37,7 +37,7 @@ export function route(app) {
       if (err || !ok) {
         return errorNoPermission(res);
       }
-      const secret = signSecret(service, method, pathname)
+      const secret = signSecret(service, method, pathname);
       sendJsonResponse(res, null, {secret});
     });
   });

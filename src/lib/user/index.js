@@ -66,7 +66,7 @@ export function requireAdmin() {
       return next();
     }
     res.status(403).json({err: 'No Permission'});
-  }
+  };
 }
 
 function indexRoute(app) {
@@ -84,7 +84,7 @@ function indexRoute(app) {
   app.get('/api/setup/', requireLogin(), (req, res) => {
     const setupToken = req.query['setup-token'];
     if (!setupToken) {
-      res.status(400).json({ err: 'setup-token is required.' });
+      res.status(400).json({err: 'setup-token is required.'});
     }
     async function doSetup() {
       const group = await getTokenValue(setupToken);
