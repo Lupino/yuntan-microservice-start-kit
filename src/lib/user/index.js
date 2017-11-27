@@ -88,6 +88,7 @@ function indexRoute(app) {
     }
     async function doSetup() {
       const group = await getTokenValue(setupToken);
+      await removeToken(setupToken);
       await userSrv.createGroup(req.currentUser.name, group);
     }
     const specData = {result: 'OK'};
