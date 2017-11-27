@@ -1,5 +1,5 @@
 import {requireLogin, requireAdmin, userSrv, getUser} from './user';
-import {sendJsonResponseWithPromise} from '../utils';
+import {sendJsonResponseWithPromise} from './utils';
 
 import {article as articleConfig} from '../../config';
 import {ArticleService} from 'yuntan-service';

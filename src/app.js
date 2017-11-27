@@ -7,6 +7,7 @@ import cors from 'cors';
 import {route as userRoute, currentUser} from './lib/user';
 import {route as uploadRoute} from './lib/upload';
 import {route as serviceRoute} from './lib/service';
+import {route as routes} from './lib/routes';
 
 const server = express();
 server.set('port', process.env.PORT || 3000);
@@ -21,6 +22,7 @@ server.use(currentUser());
 userRoute(server);
 uploadRoute(server);
 serviceRoute(server);
+routes(server);
 
 http.createServer(server).listen(server.get('port'), server.get('host'), () => {
   /* eslint-disable no-console */
