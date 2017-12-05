@@ -1,5 +1,5 @@
 import {generateToken} from '../lib/redis';
-import {promiseToCallback} from '../lib/utils';
+import promiseToCallback from 'higher-order-helper/promiseToCallback';
 
 
 async function generateAdminToken() {

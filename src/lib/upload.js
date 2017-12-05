@@ -6,8 +6,9 @@ import {
 } from '../../config';
 import fs from 'fs';
 import formidable from 'formidable';
-import {promiseToCallback, callbackToPromise, sendJsonResponse} from './utils';
+import {sendJsonResponse} from './utils';
 import {ArticleService} from 'yuntan-service';
+import {callbackToPromise, promiseToCallback} from 'higher-order-helper';
 
 export const articleSrv = new ArticleService(articleConfig);
 

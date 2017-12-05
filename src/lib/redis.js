@@ -1,7 +1,7 @@
 import {redis as config} from '../../config';
 import redisLib from 'redis';
 import {v4 as uuid} from 'uuid';
-import {callbackToPromise} from './utils';
+import callbackToPromise from 'higher-order-helper/callbackToPromise';
 
 export const rawRedis = redisLib.createClient(config);
 

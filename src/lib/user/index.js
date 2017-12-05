@@ -7,10 +7,8 @@ import {
   removeToken,
 } from '../redis';
 
-import {
-  promiseToCallback,
-  sendJsonResponseWithPromise,
-} from '../utils';
+import {sendJsonResponseWithPromise} from '../utils';
+import promiseToCallback from 'higher-order-helper/promiseToCallback';
 
 export function route(app) {
   weixinRoute(app);

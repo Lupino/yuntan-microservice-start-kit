@@ -1,12 +1,8 @@
 import {weixin, host, errorPage} from '../../../config';
 import qs from 'querystring';
 import {userSrv, getUser, doBind, doSignin} from './common';
-import {
-  promiseToCallback,
-  sendJsonResponse,
-  fetch,
-  stringGenerator,
-} from '../utils';
+import {sendJsonResponse, stringGenerator} from '../utils';
+import {fetch, promiseToCallback} from 'higher-order-helper';
 
 function getWxAccessToken(code) {
   const {appid, secret} = weixin;

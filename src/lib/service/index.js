@@ -1,11 +1,8 @@
 import crypto from 'crypto';
 import config from '../../../config';
 import {requireLogin} from '../user';
-import {
-  stringGenerator,
-  sendJsonResponse,
-  promiseToCallback,
-} from '../utils';
+import {stringGenerator, sendJsonResponse} from '../utils';
+import promiseToCallback from 'higher-order-helper/promiseToCallback';
 
 import {checkPermission as articleCheckPermission} from './article';
 import {checkPermission as coinCheckPermission} from './coin';
