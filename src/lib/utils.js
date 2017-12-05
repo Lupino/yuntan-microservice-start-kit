@@ -6,6 +6,7 @@ import omit from 'lodash.omit';
 import mapValues from 'lodash.mapvalues';
 import map from 'lodash.map';
 import isPlainObject from 'lodash.isplainobject';
+import keys from 'lodash.keys';
 
 import ShortUUID from 'shortuuid';
 export const stringGenerator = new ShortUUID('0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
@@ -27,21 +28,25 @@ export function fetch(url, options = {}) {
   return fetch_(url, options);
 }
 
-export async function fetchJSON(url, options, spec=null) {
-  if (typeof options === 'string') {
-    spec = options;
-    options = {};
-  }
+export async function fetchJSON(url, options) {
   options = options || {};
   options['Accept'] = 'application/json';
-  const rsp = await fetch_(url, options);
+  const rsp = await fetch(url, options);
   if (/application\/json/.test(rsp.headers.get('content-type'))) {
     const data = await rsp.json();
     if (data.err) {
       throw new Error(data.err);
     }
-    if (spec) {
-      return data[spec];
+    if (Array.isArray(data)) {
+      return data;
+    }
+    if (typeof data === 'object') {
+      const k = keys(data);
+      if (k.length === 1) {
+        return data[k[0]];
+      } else {
+        return data;
+      }
     }
     return data;
   }
