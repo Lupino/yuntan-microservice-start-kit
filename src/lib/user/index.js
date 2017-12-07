@@ -87,6 +87,9 @@ function indexRoute(app) {
     async function doSetup() {
       const group = await getTokenValue(setupToken);
       await removeToken(setupToken);
+      if (!group || group === 'null') {
+        throw new Error('setup token is invalid');
+      }
       await userSrv.createGroup(req.currentUser.name, group);
     }
     const specData = {result: 'OK'};
