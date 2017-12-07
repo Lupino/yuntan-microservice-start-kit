@@ -18,7 +18,7 @@ function extractUid(timelines) {
     }
     return false;
   });
-  if (filterd > 0) {
+  if (filterd.length > 0) {
     return Number(filterd[0].substr(5));
   }
   return 0;
