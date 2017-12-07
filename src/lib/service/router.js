@@ -5,9 +5,12 @@ function matchRoute(route, pathname) {
   return reg.test(pathname);
 }
 
-function extractPatam(route, pathname) {
+function extractParam(route, pathname) {
   const reg = new RegExp('^' + route.replace(reParam, '([^/]+)') + '$');
   const keys = route.match(reParam);
+  if (!keys) {
+    return {};
+  }
   const value = pathname.match(reg);
   const length = keys.length;
   let ret = {};
@@ -31,7 +34,7 @@ class Route {
     return false;
   }
   async checkPermission(options) {
-    const params = extractPatam(this.route, this.pathname);
+    const params = extractParam(this.route, this.pathname);
     return await this.routeFunction(params, options);
   }
 }
