@@ -34,9 +34,8 @@
     "lodash.mapvalues": "^4.6.0",
     "lodash.omit": "^4.5.0",
     "method-override": "^2.3.10",
+    "random-string": "^0.2.0",
     "redis": "^2.8.0",
-    "shortuuid": "^0.1.0",
-    "urllib": "^2.25.1",
     "uuid": "^3.1.0",
     "yuntan-service": "^1.0.26"
   },

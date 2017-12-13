@@ -1,12 +1,14 @@
 import crypto from 'crypto';
 import config from '../../../config';
 import {requireLogin} from '../user';
-import {stringGenerator, sendJsonResponse} from '../utils';
+import {sendJsonResponse} from '../utils';
 import promiseToCallback from 'higher-order-helper/promiseToCallback';
 
 import {checkPermission as articleCheckPermission} from './article';
 import {checkPermission as coinCheckPermission} from './coin';
 import {checkPermission as userCheckPermission} from './user';
+
+import randomString from 'random-string';
 
 const permissions = {
   article: articleCheckPermission,
@@ -42,7 +44,7 @@ export function route(app) {
 
 function signSecret(service, method, pathname) {
   const secret = config[service].secret;
-  const randomNonce = stringGenerator.random(10);
+  const randomNonce = randomString({length: 10});
   const timestamp = Math.floor(new Date() / 1000);
   const hmac = crypto.createHmac('sha256', randomNonce);
   hmac.update(secret);

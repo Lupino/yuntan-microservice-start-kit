@@ -1,4 +1,4 @@
-import {requireLogin, requireAdmin, userSrv, getUser} from './user';
+import {requireAdmin} from './user';
 import {sendJsonResponseWithPromise} from './utils';
 
 import {article as articleConfig} from '../../config';

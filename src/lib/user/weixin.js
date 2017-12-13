@@ -1,8 +1,9 @@
 import {weixin, host, errorPage} from '../../../config';
 import qs from 'querystring';
 import {userSrv, getUser, doBind, doSignin} from './common';
-import {sendJsonResponse, stringGenerator} from '../utils';
+import {sendJsonResponse} from '../utils';
 import {fetch, promiseToCallback} from 'higher-order-helper';
+import randomString from 'random-string';
 
 function getWxAccessToken(code) {
   const {appid, secret} = weixin;
@@ -31,7 +32,7 @@ async function signinOrSignupHandler_(code) {
   try {
     user = await getUser(unionid, ['weixin']);
   } catch (e) {
-    const passwd = stringGenerator.random(10);
+    const passwd = randomString({length: 10});
     user = await userSrv.create({username: unionid, passwd});
     await doBind(unionid, {service: 'weixin', name: unionid, extra: uinfo});
     const extra = {

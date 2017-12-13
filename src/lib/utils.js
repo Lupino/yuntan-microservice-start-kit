@@ -4,9 +4,6 @@ import map from 'lodash.map';
 import isPlainObject from 'lodash.isplainobject';
 import promiseToCallback from 'higher-order-helper/promiseToCallback';
 
-import ShortUUID from 'shortuuid';
-export const stringGenerator = new ShortUUID('0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
-
 function secure(data) {
   return omit(data, ['__v', '_id']);
 }
