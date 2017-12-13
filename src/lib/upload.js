@@ -1,21 +1,17 @@
-import {requireLogin, userSrv, getUser} from './user';
+import {requireLogin, userSrv} from './user';
 import {
   uploadPath,
   tempPath,
-  article as articleConfig,
 } from '../../config';
 import fs from 'fs';
 import formidable from 'formidable';
 import {sendJsonResponse} from './utils';
-import {ArticleService} from 'yuntan-service';
 import {callbackToPromise, promiseToCallback} from 'higher-order-helper';
-
-export const articleSrv = new ArticleService(articleConfig);
 
 async function upload(file, bucket) {
   let fileName = uploadPath + '/' + file.hash + '.jpg';
   await callbackToPromise(fs.rename.bind(fs))(file.path, fileName);
-  return await articleSrv.saveFile(file.hash, bucket);
+  return {file_key: file.hash, ext: '.jpg'};
 }
 
 async function uploadAvatar(user, file) {
@@ -25,7 +21,7 @@ async function uploadAvatar(user, file) {
     throw new Error('upload avatar failed');
   }
   await userSrv.updateExtra(name, {avatar});
-  return await getUser(name);
+  return avatar;
 }
 
 export function route(app) {
