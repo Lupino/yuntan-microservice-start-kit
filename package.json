@@ -12,14 +12,14 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.0.3",
+    "babel-eslint": "^8.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
-    "eslint": "^4.13.1",
+    "eslint": "^4.14.0",
     "eslint-config-google": "^0.9.1",
     "lab": "^15.1.2",
-    "nodemon": "^1.12.5"
+    "nodemon": "^1.14.7"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
@@ -28,7 +28,7 @@
     "express": "^4.16.2",
     "form-data": "^2.3.1",
     "formidable": "^1.1.1",
-    "higher-order-helper": "^1.0.1",
+    "higher-order-helper": "^1.0.3",
     "lodash.isplainobject": "^4.0.6",
     "lodash.map": "^4.6.0",
     "lodash.mapvalues": "^4.6.0",
@@ -37,7 +37,7 @@
     "random-string": "^0.2.0",
     "redis": "^2.8.0",
     "uuid": "^3.1.0",
-    "yuntan-service": "^1.0.28"
+    "yuntan-service": "^1.1.1"
   },
   "author": "Li Meng Jun",
   "license": "MIT"
